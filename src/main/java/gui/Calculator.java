@@ -144,7 +144,12 @@ public class Calculator extends VBox implements EventHandler<ActionEvent>{
 		if(numeros.contains(value)) {
 			if(operator == null) {
 				number1 += value;
-				displayText.setText(displayText.getText()+value);
+				if(number1.length()==1) {
+					displayText.setText(value);
+				}
+				else{
+					displayText.setText(displayText.getText()+value);
+				}
 			}
 			else{
 				number2 += value;
@@ -152,21 +157,29 @@ public class Calculator extends VBox implements EventHandler<ActionEvent>{
 			}
 		}
 		if(value.equals("=")) {
-			int num1 = Integer.valueOf(number1);
-			int num2 = Integer.valueOf(number2);
+			Float num1 = Float.valueOf(number1);
+			Float num2 = Float.valueOf(number2);
 			
 			if(operator=="/") {
-				displayText.setText(String.valueOf(num1/num2));
+				if(num1/num2==Math.round(num1/num2)) {
+					displayText.setText(String.valueOf(Math.round(num1/num2)));
+				}
+				else{
+					displayText.setText(String.valueOf(num1/num2));
+				}
 			}
 			else if(operator=="*") {
-				displayText.setText(String.valueOf(num1*num2));
+				displayText.setText(String.valueOf(Math.round(num1*num2)));
 			}
 			else if(operator=="-") {
-				displayText.setText(String.valueOf(num1-num2));
+				displayText.setText(String.valueOf(Math.round(num1-num2)));
 			}
 			else if(operator.equals("+")) {
-				displayText.setText(String.valueOf(num1+num2));
+				displayText.setText(String.valueOf(Math.round(num1+num2)));
 			}
+			number1 = "";
+			number2 = "";
+			operator = null;
 		}
 	}
 }
